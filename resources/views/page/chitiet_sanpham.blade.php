@@ -3,11 +3,11 @@
 <div class="inner-header">
 		<div class="container">
 			<div class="pull-left">
-				<h6 class="inner-title">Product</h6>
+				<h6 class="inner-title">{{$sanpham->name}}</h6>
 			</div>
 			<div class="pull-right">
 				<div class="beta-breadcrumb font-large">
-					<a href="index.html">Home</a> / <span>Product</span>
+					<a href="{{route('trang-chu')}}">Home</a> / <span>{{$sanpham->name}}</span>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -21,21 +21,27 @@
 
 					<div class="row">
 						<div class="col-sm-4">
-							<img src="source/assets/dest/images/products/6.jpg" alt="">
+							<img src="source/image/product/{{$sanpham->image}}" alt="" height="250px">
 						</div>
 						<div class="col-sm-8">
 							<div class="single-item-body">
-								<p class="single-item-title">Sample Woman Top</p>
+								<p class="single-item-title">{{$sanpham->name}}</p>
 								<p class="single-item-price">
-									<span>$34.55</span>
-								</p>
+												@if($sanpham->promotion_price!=0)
+													<div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
+													<span class="flash-del">{{$sanpham->unit_price}} đồng</span>
+													<span class="flash-sale">{{$sanpham->promotion_price}} đồng</span>
+												@else
+													<span class="flash-sale">{{$sanpham->unit_price}} đồng</span>
+												@endif
+											</p>
 							</div>
 
 							<div class="clearfix"></div>
 							<div class="space20">&nbsp;</div>
 
 							<div class="single-item-desc">
-								<p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo ms id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe.</p>
+								<p>{{$sanpham->descripsion}}</p>
 							</div>
 							<div class="space20">&nbsp;</div>
 

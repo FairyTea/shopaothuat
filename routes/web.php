@@ -20,12 +20,22 @@ Route::get('index',[
 	'uses'=>'PageController@getIndex',
 ]);
 
-Route::get('loai-san-pham',[
+Route::get('loai-san-pham/{type}',[
 	'as'=>'loaisanpham',
 	'uses'=>'PageController@getLoaiSp',
 ]);
 
-Route::get('chi-tiet-san-pham',[
+Route::get('chi-tiet-san-pham/{id}',[
 	'as'=>'chitietsanpham',
 	'uses'=>'PageController@getChiTiet',
+]);
+
+Route::get('gioi-thieu',[
+	'as'=>'gioithieu',
+	'uses'=>'PageController@getGioiThieu',
+]);
+
+Route::get('lien-he',[
+	'as'=>'lienhe',
+	'uses'=>'PageController@getLienHe',
 ]);
