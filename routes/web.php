@@ -39,3 +39,8 @@ Route::get('lien-he',[
 	'as'=>'lienhe',
 	'uses'=>'PageController@getLienHe',
 ]);
+
+Route::get('add-to-cart/{id}',[
+	'as'=>'themgiohang',
+	'uses'=>'PageController@getAddtoCart',
+]);
