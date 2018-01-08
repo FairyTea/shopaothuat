@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Slide;
 use App\Product;
 use App\ProductType;
+use Session;
+use App\Cart;
 
 use Illuminate\Http\Request;
 
@@ -29,7 +31,8 @@ class PageController extends Controller
     public function getChiTiet(Request $req)
     {
         $sanpham = Product::where('id',$req->id)->first();
-    	return view('page.chitiet_sanpham',compact('sanpham'));
+        $sp_tuongtu = Product::where('id_type',$sanpham->id_type)->paginate(6);
+        return view('page.chitiet_sanpham',compact('sanpham','sp_tuongtu'));
     }
 
     public function getGioiThieu(){
@@ -40,5 +43,14 @@ class PageController extends Controller
     public function getLienHe(){
         
         return view('page.lien_he');
+    }
+
+    public function getAddtoCart(Request $req, $id){
+        $product = Product::find($id);
+        $oldCart = Session('cart')?Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->add($product, $id);
+        $req->session()->put('cart',$cart);
+        return redirect()->back();
     }
 }
