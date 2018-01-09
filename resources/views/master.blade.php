@@ -19,6 +19,7 @@
 <body>
 
 		@include('header')
+		
 	<div class="rev-slider">
 		@yield('content')
 	</div>

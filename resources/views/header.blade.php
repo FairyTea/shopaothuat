@@ -1,3 +1,4 @@
+<div>
 <div id="header">
 		<div class="header-top">
 			<div class="container">
@@ -32,46 +33,48 @@
 					</div>
 
 					<div class="beta-comp">
-						@if(Session::has('cart'))
 						<div class="cart">
 							<div class="beta-select"><i class="fa fa-shopping-cart"></i> Giỏ hàng 
 								@if(Session::has('cart'))
 								{{Session('cart')->totalQty}}
 								@else Trống @endif <i class="fa fa-chevron-down"></i></div>
 							<div class="beta-dropdown cart-body">
-								
-								@foreach($product_cart as $produst)
+							
+							@if(Session::has('cart'))	
+								@foreach($product_cart as $product)
 								<div class="cart-item">
-									<div class="media">
-										<a class="pull-left" href="#"><img src="source/image/product/{{$produst['item']['image']}}" alt=""></a>
+									<a class="cart-item-delete" href="{{route('xoagiohang',$product['item']['id'])}}">
+									<div class="media"></a>
+										<a class="pull-left" href="#"><img src="source/image/product/{{$product['item']['image']}}" alt=""></a>
 										<div class="media-body">
-											<span class="cart-item-title">{{$produst['item']['name']}}</span>
-											<span class="cart-item-options">Size: XS; Colar: Navy</span>
-											<span class="cart-item-amount">{{$produst['qty']}}*<span>{{$produst['item']['unit_price']}}</span></span>
+											<span class="cart-item-title">{{$product['item']['name']}}</span>
+											<span class="cart-item-amount">{{$product['qty']}}*<span>
+											@if ($product['item']['promotion_price']==0) {{number_format($product['item']['unit_price'])}} @else{{number_format($product['item']['promotion_price'])}} @endif </span></span>
 										</div>
 									</div>
 								</div>
 								@endforeach
-								
 								<div class="cart-caption">
 									<div class="cart-total text-right">Tổng tiền: <span class="cart-total-value">{{Session('cart')->totalPrice}}</span></div>
 									<div class="clearfix"></div>
-
+							
 									<div class="center">
 										<div class="space10">&nbsp;</div>
 										<a href="checkout.html" class="beta-btn primary text-center">Đặt hàng <i class="fa fa-chevron-right"></i></a>
 									</div>
+									@endif
 								</div>
 							</div>
 						</div>
-						@endif
+						
 					</div>
 				</div>
 				<div class="clearfix"></div>
 			</div> <!-- .container -->
 		</div> <!-- .header-body -->
-		<div class="header-bottom" style="background-color: #0277b8;">
-			<div class="container">
+<div>
+	<div class="header-bottom" style="background-color: #0277b8;">
+		<div class="container">
 				<a class="visible-xs beta-menu-toggle pull-right" href="#"><span class='beta-menu-toggle-text'>Menu</span> <i class="fa fa-bars"></i></a>
 				<div class="visible-xs clearfix"></div>
 				<nav class="main-menu">
@@ -92,3 +95,5 @@
 			</div> <!-- .container -->
 		</div> <!-- .header-bottom -->
 	</div> <!-- #header -->
+
+</div>
