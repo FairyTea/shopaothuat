@@ -55,31 +55,44 @@
 							<textarea id="notes"></textarea>
 						</div>
 					</div>
+
+					
+
+
 					<div class="col-sm-6">
 						<div class="your-order">
-							<div class="your-order-head"><h5>Đơn hàng của bạn</h5></div>
-							<div class="your-order-body" style="padding: 0px 10px">
-								<div class="your-order-item">
-									<div>
+							<div class="your-order-head"><h5>Đơn hàng của bạn
+							@if(Session::has('cart'))
+								{{Session('cart')->totalQty}}
+							@else Trống @endif
+							</h5></div>
 
-									<div class="media">
-											<img width="25%" src="assets/dest/images/shoping1.jpg" alt="" class="pull-left">
-											<div class="media-body">
-												<p class="font-large">Men's Belt</p>
-												<span class="color-gray your-order-info">Color: Red</span>
-												<span class="color-gray your-order-info">Size: M</span>
-												<span class="color-gray your-order-info">Qty: 1</span>
+							<div class="your-order-body" style="padding: 0px 10px">
+								@if(Session::has('cart'))	
+									@foreach($product_cart as $product)
+									<div class="your-order-item">
+										<div>
+
+										<div class="media">
+												<img width="25%" src="source/image/product/{{$product['item']['image']}}" alt="" class="pull-left">
+												<div class="media-body">
+													<p class="font-large">{{$product['item']['name']}}</p>
+													<span class="color-gray your-order-info">{{$product['qty']}}*<span>
+													@if ($product['item']['promotion_price']==0) {{number_format($product['item']['unit_price'])}} @else{{number_format($product['item']['promotion_price'])}} @endif </span></span>
+															
+												</div>
 											</div>
+										
 										</div>
-									
+										<div class="clearfix"></div>
 									</div>
-									<div class="clearfix"></div>
-								</div>
-								<div class="your-order-item">
-									<div class="pull-left"><p class="your-order-f18">Tổng tiền:</p></div>
-									<div class="pull-right"><h5 class="color-black">50000</h5></div>
-									<div class="clearfix"></div>
-								</div>
+									@endforeach
+									<div class="your-order-item">
+										<div class="pull-left"><p class="your-order-f18">Tổng tiền:</p></div>
+										<div class="pull-right"><h5 class="color-black">{{Session('cart')->totalPrice}}</h5></div>
+										<div class="clearfix"></div>
+									</div>
+								@endif
 							</div>
 							<div class="your-order-head"><h5>Hình thức thanh toán</h5></div>
 							
@@ -107,7 +120,7 @@
 								</ul>
 							</div>
 
-							<div class="text-center"><a class="beta-btn primary" href="#">Đặt hàng <i class="fa fa-chevron-right"></i></a></div>
+							<div class="text-center"><a class="beta-btn primary" href="{{route('dathang')}}">Đặt hàng <i class="fa fa-chevron-right"></i></a></div>
 						</div> 
 					</div>
 				</div>

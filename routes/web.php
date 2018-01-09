@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('index',[
+Route::get('/',[
 	'as'=>'trang-chu',
 	'uses'=>'PageController@getIndex',
 ]);
@@ -79,3 +79,6 @@ Route::get('dang-xuat',[
 	'as' => 'logout',
 	'uses' => 'PageController@getLogout',
 ]);
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
