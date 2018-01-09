@@ -50,12 +50,32 @@ Route::get('del-cart/{id}',[
 	'uses' => 'PageController@getDelItemCart',
 ]);
 
-Route::get('dat-hang',[
+Route::get('dathang',[
 	'as' => 'dathang',
-	'uses' => 'PageController@getCheckOut'
+	'uses' => 'PageController@getCheckOut',
 ]);
 
 Route::post('dathang',[
 	'as' => 'dathang',
 	'use' =>'PageController@postCheckOut',
+]);
+
+Route::get('dang-ki',[
+	'as' => 'signin',
+	'uses' => 'PageController@getSignin',
+]);
+
+Route::post('dang-ki',[
+	'as' => 'signin',
+	'uses' => 'PageController@postSignin',
+]);
+
+Route::get('dang-nhap',[
+	'as' => 'login',
+	'uses' => 'PageController@getLogin',
+]);
+
+Route::get('dang-xuat',[
+	'as' => 'logout',
+	'uses' => 'PageController@getLogout',
 ]);

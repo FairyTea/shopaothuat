@@ -9,6 +9,9 @@ use App\Cart;
 use App\Customer;
 use App\Bill;
 use App\BillDetail;
+use App\User;
+use Hash;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -81,7 +84,7 @@ class PageController extends Controller
         $customer->name = $req->name;
         $customer->gender = $req->name;
         $customer->email = $req->email;
-        $customer->adres = $req->adres;
+        $customer->addres = $req->addres;
         $customer->phone = $req->phone;
         $customer->note = $req->notes;
         $customer->save();
@@ -104,5 +107,62 @@ class PageController extends Controller
         Session::forget('cart');
         return redirect()->back()->with('thongbao','Đặt hàng thành công');
 
+    }
+
+    public function getSignin(){
+        return view('page.dangki');
+    }
+
+    public function postSignin(Request $req){
+        $this->validate($req,[
+            'email'=>'required|email|unique:users,email',
+            'password'=>'required|min:6|max:20',
+            'fullname'=>'required',
+            're_password'=>'required|same:password'
+        ],[
+            'email.required'=>'Vui lòng nhập email',
+            'email.email'=>'Không đúng định dạng email',
+            'email.unique'=>'Email đã được sử dụng',
+            'password.required'=>'Vui lòng nhập password',
+            'password.min'=>'Mật khẩu ít nhất 6 kí tự vui lòng nhập lại',
+            're_password.same'=>'Mật khẩu không trùng nhau'
+        ]);
+        $user = new User();
+        $user->fullname = $req->fullname;
+        $user->email = $req->email;
+        $user->password = Hash::make($req->password);
+        $user->phone = $req->phone;
+        $use->address = $req->address;
+        $user->save();
+        return redirect()->back()->with('thangcong','Tạo tài khoản thành công');
+    }
+
+    public function getLogin(){
+        return view('page.dangnhap');
+    }
+
+    public function postLogin(Request $rq){
+        $this->validate($req,[
+            'email'=>'required|email',
+            'password'=>'required|min:6|max:20'
+        ],
+        [
+            'email.required'=>'Vui lòng nhập email',
+            'email.email'=>'Không đúng định dạng email',
+            'password.required'=>'Vui lòng nhập password',
+
+        ]);
+        $credentails = array('email'=>$req->email ,'password'=>$req->password );
+        if(Auth::atttempt($credentails)){
+            return redirect()->back()->with(['flat'=>'success','message'=>'Đăng nhập thành công']);
+        }
+        else{
+            return redirect()->back()->with(['flat'=>'danger','message','Đăng nhập không thành công']);
+        }
+    }
+
+    public function getLogout(){
+        Auth::logout();
+        return redirect()->route('trang-chu');
     }
 }
